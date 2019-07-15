@@ -28,15 +28,14 @@ for (var i=1; i<100; i++) {
     var byTens = multiply(multiply(result, tens), 10);
     var accum = 0;
     var max = Math.max(byDigits.length, byTens.length);
-    for (var i=0; i<max; i++) {
-      result[i] = accum;
-      if (byDigits[i]) result[i] += byDigits[i];
-      if (byTens[i]) result[i] += byTens[i];
-      accum = result[i]>0 ? Math.floor(result[i]/10) : 0;
-      result[i] = result[i]%10;
+    for (var j=0; j<max; j++) {
+      result[j] = accum;
+      if (byDigits[j]) result[j] += byDigits[j];
+      if (byTens[j]) result[j] += byTens[j];
+      accum = result[j]>0 ? Math.floor(result[j]/10) : 0;
+      result[j] = result[j]%10;
     }
     if (accum>0) result[max] = accum;
-    console.log(accum);
   } else {
     result = byDigits;
   }
@@ -44,3 +43,5 @@ for (var i=1; i<100; i++) {
 
 var sum = 0;
 for (var i=0; i<result.length; i++) sum += result[i];
+
+// 648
