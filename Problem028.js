@@ -12,22 +12,29 @@ It can be verified that the sum of the numbers on the diagonals is 101.
 What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?
 */
 
+function isNotEmpty(y, x) {
+  return matrix[y]!=null && matrix[y][x]!=null;
+}
+function isEmpty(y, x) {
+  return !isNotEmpty(y, x);
+}
+var size = 1001;
 var matrix = [];
-for (var i=0; i<5; i++) matrix[i] = [];
-var x = Math.floor(5/2);
-var y = Math.floor(5/2);
+for (var i=0; i<size; i++) matrix[i] = [];
+var x = Math.floor(size/2);
+var y = Math.floor(size/2);
 var last = 1;
 matrix[y][x] = last;
-while(x!=4 && y!=0) {
-  if (matrix[y] && matrix[y][x-1]) {
+while(x!=(size-1) || y!=0) {
+  if (isNotEmpty(y, x-1) && isEmpty(y+1, x)) {
     // Go down
     y++;
   } else {
-    if (matrix[y-1] && matrix[y-1][x]) {
+    if (isNotEmpty(y-1, x) && isEmpty(y, x-1)) {
       // Go left
       x--;
     } else {
-      if (matrix[y] && matrix[y][x+1]) {
+      if (isNotEmpty(y, x+1) && isEmpty(y-1,x)) {
         // Go up
         y--;
       } else {
@@ -39,3 +46,11 @@ while(x!=4 && y!=0) {
   last++;
   matrix[y][x] = last;
 }  
+
+var sum = 0;
+for (var i=0; i<size; i++) {
+  sum += (i != size-1-i) ? matrix[i][i] + matrix[i][size-1-i] : matrix[i][i];
+}
+
+console.log(sum);
+// 669171001
