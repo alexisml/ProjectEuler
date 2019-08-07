@@ -20,39 +20,25 @@ function oneOfEach(input, collection) {
 var collection = ["1","2","3","4","5","6","7","8","9"];
 
 var products = [];
-for (var n=123456789; n<=987654321; n++) {
-  var str = '';
-  do {
-    str = n.toString();
-  } while (!oneOfEach(str, collection));
+for (var n=123456789; n<=987654321; n++) { 
+  var str = n.toString();
+  if (!oneOfEach(str, collection)) continue;
   // Try out partitions of the number
   for (var i=1; i<=4; i++) {
     for (var j=1; j<=5-i; j++) {
       if (
-        parseInt(str.substring(0, i)) * parseInt(str.substring(i, j))
+        parseInt(str.substring(0, i)) * parseInt(str.substring(i, i+j))
         ==
-        parseInt(str.substring(i+j, 9-i-j))
+        parseInt(str.substring(i+j, 9))
       ) {
-        console.log(str);
-        products[parseInt(str.substring(i+j, 9-i-j))] = 1;
+        products[parseInt(str.substring(i+j, 9))] = 1;
       }
     }
   }
 }
 
-// Another approach 
-
-for (var i=1; i<9876543; i++) {
-  if (i%100==0) console.log(i);
-  //if (!oneOfEach(i.toString(), collection, false)) continue;
-  for (var j=i; j<9876543; j++) {
-    var str = i.toString() + j.toString() + (i*j).toString();
-    if (str.length != 10) continue;
-    console.log(str);
-    if (oneOfEach(str, collection, true)) products[i*j] = 1;
-  }
-}
-
 var sum = 0;
-for (var i=0; i<products.length; i++) if (products[i]) sum++; 
+for (var i=0; i<products.length; i++) if (products[i]) sum += i; 
     
+console.log(sum);
+// 45228
