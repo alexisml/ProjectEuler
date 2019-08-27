@@ -8,7 +8,7 @@ Find the smallest prime which, by replacing part of the number (not necessarily 
 
 // Find primes
 var primes = [2];
-for (var n=3; n<=10000000; n++) {
+for (var n=3; n<1000000; n++) {
   var isPrime = true;
   for (var i=0; isPrime && i<primes.length && primes[i]<=Math.sqrt(n); i++) isPrime = (n%primes[i]!=0);
   if (isPrime) primes.push(n); 
@@ -21,11 +21,15 @@ function hasRepeated(number) {
   do {
     poped = arr.pop();
   } while (poped!=null && !arr.includes(poped));
+  poped = null; // Again
+  do {
+    poped = arr.pop();
+  } while (poped!=null && !arr.includes(poped));
   return arr.includes(poped);
 }
 var primesWithRepeated = [];
 for (var n=0; n<primes.length; n++) {
-  if (primes[n]<10000) continue;
+  if (primes[n]<100000) continue;
   if (hasRepeated(primes[n])) primesWithRepeated.push(primes[n]);
 }
 
@@ -34,7 +38,7 @@ function hasRepeatedZeroOneOrTwo(number) {
   var str = number.toString();
   for (var i=0; i<=2; i++) {
     var first = str.indexOf(i.toString());
-    if (first>=0 && str.indexOf(i.toString(),first+1)>0 && str.indexOf(i.toString(),first+1)<str.length) return true;
+    if (first>=0 && str.indexOf(i.toString(),first+1)>0 && str.indexOf(i.toString(),first+1)<str.length-1) return true;
   }
   return false;
 }
@@ -48,7 +52,7 @@ function hasRepeatedDigit(number, digit) {
   var str = number.toString();
   var dig = digit.toString();
   var first = str.indexOf(dig);
-  return (first>=0 && str.indexOf(dig,first)>0);
+  return (first>=0 && str.indexOf(dig,first+1)>0);
 }
 
 for (var i=0; i<pwrWithZeroOneOrTwo.length; i++) {
@@ -59,8 +63,13 @@ for (var i=0; i<pwrWithZeroOneOrTwo.length; i++) {
   } else if (hasRepeatedDigit(pwrWithZeroOneOrTwo[i], 1)) {
     firstRepeated = 1;
   } // else it is 2
-  for (var n=firstRepeated+1; n<10 && 10-count>=n; n++) {
-    var number = parseInt(pwrWithZeroOneOrTwo[i].toString().replace(firstRepeated.toString(), n.toString()));
+  for (var n=firstRepeated+1; n<10; n++) {
+    var number = parseInt(
+      pwrWithZeroOneOrTwo[i].toString()
+        .replace(firstRepeated.toString(), n.toString())
+        .replace(firstRepeated.toString(), n.toString())
+        .replace(firstRepeated.toString(), n.toString())
+    );
     if (primesWithRepeated.includes(number)) {
       count++;
       if (count>2)console.log("Original: " + pwrWithZeroOneOrTwo[i] + " Variation: " + number + " Count: " + count);
@@ -72,4 +81,5 @@ for (var i=0; i<pwrWithZeroOneOrTwo.length; i++) {
   }
 }
 
-// Change 2 instead of all?
+// Tried with 2 repetitions with no luck; 3 works!
+// 121313
