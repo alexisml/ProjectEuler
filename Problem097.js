@@ -30,7 +30,7 @@ function multiply(arr1, arr2) {
       res[j] = res[j]%10;
     }
     if (carry>0) res[res.length] = carry;
-    for (var j=0; j<i; i++) res.unshift(0);
+    for (var j=0; j<i; j++) res.unshift(0);
     ret = sum(ret, res);
     truncateTen(ret);
   }
@@ -48,4 +48,6 @@ for (var i=0; i<7830457; i++) {
 current = multiply(current, [3,3,4,8,2]);
 current = sum(current, [1]);
 
-console.log(current.reverse.join(""));
+console.log(current.reverse().join(""));
+
+// 8739992577
